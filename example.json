@@ -1,0 +1,58 @@
+{
+    "content": "char(2000)\nHey, welcome to <:discohook:736648398081622016> Discohook! The easiest way to build and send Discord messages with embeds using webhooks.\n\nThe embeds below explain a bit more, but you're not required to read them. If you're ready, click on the \"Clear All\" button in the editor to start making your own messages.\n\nDiscohook has [a support server](https://discohook.app/discord)! Feel free to join and ask any questions you may have, or suggest things you'd like to see.\n\nThere's also [a complementary bot](https://discohook.app/bot), it's completely optional but you may want it.\n_ _",
+    "embeds": [
+      {
+        "title": "char(256) Discord bot",
+        "description": "char(2048) Discohook has a complementary bot, while it's not strictly required to send messages it may be helpful to have it.\n\nBelow is a small but incomplete overview of what the bot can do for you.",
+        "url": "http://body.url",
+        "color": 5814783,
+        "fields": [
+          {
+            "name": "char(256) Mentioning users, roles, channels, and using emojis",
+            "value": "char(1024)  These things have [manual ways](https://discord.dev/reference#message-formatting), however they're easy to mess up for someone that doesn't know what they're doing.\nIf you don't understand the above link, using Discohook's bot for this is recommended.\n\nThe relevant commands in the bot are `d.user`, `d.role`, `d.channel`, and `d.emoji`. Each of those will return formatting which you can copy into the editor to get the appropriate output.\n\nTo use Discord's default emojis, use its short name wrapped in colons. As an example, \"\\:eyes:\" will make the eyes emoji."
+          },
+          {
+            "name": "char(256)  Creating reaction roles",
+            "value": "char(1024) You can create reaction roles with the bot using the `d.reactionrole` command, the set-up process is very simple: add a reaction to any existing message in your server, and name the role.\n\nNote that while other bots may allow you to configure reaction roles, Discohook's are the only ones we can give support for.",
+            "inline": true
+          }
+        ],
+        "author": {
+          "name": "char(256) autor",
+          "url": "http://autor.url",
+          "icon_url": "http://autor.icon.url"
+        },
+        "footer": {
+          "text": "char(256)  footer",
+          "icon_url": "http://footer.icon.url"
+        },
+        "timestamp": "1969-12-31T23:00:00.000Z",
+        "image": {
+          "url": "http://image1.url"
+        },
+        "thumbnail": {
+          "url": "http://thumbnail.url"
+        }
+      },
+      {
+        "url": "http://body.url",
+        "image": {
+          "url": "http://image2.url"
+        }
+      },
+      {
+        "url": "http://body.url",
+        "image": {
+          "url": "http://image3.url"
+        }
+      },
+      {
+        "url": "http://body.url",
+        "image": {
+          "url": "http://only.one.image.allowed/When.BODY.url.is.set.then.four.images.are.allowed"
+        }
+      }
+    ],
+    "username": "char(80) username",
+    "avatar_url": "http://avater"
+  }
