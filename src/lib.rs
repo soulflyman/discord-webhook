@@ -59,7 +59,7 @@ struct AllowedMention {
 
 
 #[derive(Debug, Default, Serialize)]
-struct DiscordHookPayload {
+struct DiscordWebHookPayload {
     #[serde(skip_serializing_if = "Option::is_none")] content: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")] username: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")] avatar_url: Option<String>,
@@ -68,10 +68,10 @@ struct DiscordHookPayload {
 }
 
 #[derive(Debug)]
-pub struct DiscordHook {
+pub struct DiscordWebHook {
     webhook_url: String,
     client: reqwest::blocking::Client,
-    payload: DiscordHookPayload,    
+    payload: DiscordWebHookPayload,    
 }
 
 struct DefaultLength {
@@ -100,15 +100,15 @@ static MAX_LEN: DefaultLength = DefaultLength {
     images: 4
 };
 
-impl DiscordHook {
-    pub fn new(webhook_url: &str, content: &str) -> DiscordHook {
+impl DiscordWebHook {
+    pub fn new(webhook_url: &str, content: &str) -> DiscordWebHook {
         let mut tmp_content = content.to_owned();
         tmp_content.truncate(MAX_LEN.content);
         
-        let mut payload = DiscordHookPayload::default();
+        let mut payload = DiscordWebHookPayload::default();
         payload.content = Some(tmp_content);
 
-        return DiscordHook {
+        return DiscordWebHook {
             webhook_url: webhook_url.to_owned(),
             client: reqwest::blocking::Client::new(),
             payload: payload
@@ -151,11 +151,11 @@ impl DiscordHook {
         Ok(())
     }
 
-    pub fn new_with_embed(webhook_url: &str, embed: Embed) -> DiscordHook {
-        let mut hook = DiscordHook {
+    pub fn new_with_embed(webhook_url: &str, embed: Embed) -> DiscordWebHook {
+        let mut hook = DiscordWebHook {
             webhook_url: webhook_url.to_owned(),
             client: reqwest::blocking::Client::new(),
-            payload: DiscordHookPayload::default()
+            payload: DiscordWebHookPayload::default()
         };
 
         hook.add_embed(embed);
@@ -175,7 +175,7 @@ impl DiscordHook {
 mod tests {
     use std::result;
 
-    use crate::{DiscordHook, Embed};
+    use crate::{DiscordWebHook, Embed};
 
     const test_hook_url: &str = "https://discord.com/api/webhooks/xxx/yyy";
     const test_avatar_url1: &str = "http://example.com/discord/avatars/Shabra2.jpg";
@@ -184,7 +184,7 @@ mod tests {
 
     #[test]
     fn it_works1() {
-        let mut hook = DiscordHook::new(test_hook_url, "Test");
+        let mut hook = DiscordWebHook::new(test_hook_url, "Test");
         hook.set_avatar_url(test_avatar_url2);
         hook.set_username("Umpalumpa3");
 
@@ -220,7 +220,7 @@ mod tests {
             ..Default::default()
         };
 
-        let mut hook = DiscordHook::new_with_embed(test_hook_url, embed2);
+        let mut hook = DiscordWebHook::new_with_embed(test_hook_url, embed2);
         hook.set_avatar_url(test_avatar_url1);
         hook.set_username("Umpalumpa2");
         
@@ -238,7 +238,7 @@ mod tests {
             ..Default::default()
         };
 
-        let mut hook = DiscordHook::new_with_embed(test_hook_url, embed2);
+        let mut hook = DiscordWebHook::new_with_embed(test_hook_url, embed2);
         hook.set_avatar_url(test_avatar_url3);
         hook.set_username("Thorbard");
         
@@ -250,7 +250,7 @@ mod tests {
     #[test]
     fn it_works4() {
 
-        let mut hook = DiscordHook::new(test_hook_url, "some message");
+        let mut hook = DiscordWebHook::new(test_hook_url, "some message");
         hook.set_avatar_url(test_avatar_url3);
         hook.set_username("Thorbärdel");
        
@@ -273,7 +273,7 @@ mod tests {
     }
 
     fn it_works5() {
-        let mut hook = DiscordHook::new(test_hook_url, "Test");
+        let mut hook = DiscordWebHook::new(test_hook_url, "Test");
         hook.set_avatar_url(test_avatar_url2);
         hook.set_username("Umpalumpa3");
       
