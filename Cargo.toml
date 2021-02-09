@@ -1,10 +1,16 @@
 [package]
 name = "discord-webhook"
 version = "0.1.0-alpha"
-authors = ["soulflyman"]
+authors = ["soulflyman (Stefan Marx) <git@it-marx.de>"]
+license = "MIT"
+description = "A library that helps to use discord webhooks."
+repository = "https://github.com/soulflyman/discord-webhook"
+#documentation = "https://"
+keywords = ["discord", "webhook", "bot"]
+categories = ["network-programming"]
+readme = "README.md"
+include = ["src/**/*.rs", "README.md", "LICENSE"]
 edition = "2018"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 reqwest = { version = "0.11", features = ["blocking", "json"] }
