@@ -7,37 +7,37 @@ use serde_derive::Serialize;
 use serde_json::Result;
 use reqwest::blocking::Response;
 
-#[derive(Debug, Default, Serialize)]
+#[derive(Debug, Default, Serialize, Clone)]
 pub struct EmbedAutor {
     name: String,
     url: String,
     icon_url: String
 }
 
-#[derive(Debug, Default, Serialize)]
+#[derive(Debug, Default, Serialize, Clone)]
 pub struct EmbedField {
     name: String,
     value: String,
     inline: bool
 }
 
-#[derive(Debug, Default, Serialize)]
+#[derive(Debug, Default, Serialize, Clone)]
 pub struct EmbedFooter {
     text: String,
     icon_url: String,
 }
 
-#[derive(Debug, Default, Serialize)]
+#[derive(Debug, Default, Serialize,  Clone)]
 pub struct EmbedImage {
     url: String
 }
 
-#[derive(Debug, Default, Serialize)]
+#[derive(Debug, Default, Serialize,  Clone)]
 pub struct EmbedThumbnail {
     url: String
 }
 
-#[derive(Debug, Default, Serialize)]
+#[derive(Debug, Default, Serialize, Clone)]
 pub struct Embed {
     pub title: Option<String>,
     pub description: Option<String>,
@@ -52,13 +52,13 @@ pub struct Embed {
 }
 
 
-#[derive(Debug, Default, Serialize)]
+#[derive(Debug, Default, Serialize, Clone)]
 struct AllowedMention {
 
 }
 
 
-#[derive(Debug, Default, Serialize)]
+#[derive(Debug, Default, Serialize, Clone)]
 struct DiscordWebHookPayload {
     #[serde(skip_serializing_if = "Option::is_none")] content: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")] username: Option<String>,
@@ -130,6 +130,7 @@ impl DiscordWebHook {
     }
 
     pub fn set_avatar_url(&mut self, avatar_url: &str) {
+        //TODO check if url is a valid url and only set if if valid
         self.payload.avatar_url = Some(avatar_url.to_owned());
     }
 
@@ -177,15 +178,15 @@ mod tests {
 
     use crate::{DiscordWebHook, Embed};
 
-    const test_hook_url: &str = "https://discord.com/api/webhooks/xxx/yyy";
-    const test_avatar_url1: &str = "http://example.com/discord/avatars/Shabra2.jpg";
-    const test_avatar_url2: &str = "http://example.com/discord/avatars/Shabra3.jpg";
-    const test_avatar_url3: &str = "http://example.com/discord/avatars/Thorbard.jpg";
+    const TEST_HOOK_URL: &str = "https://discord.com/api/webhooks/xxx/yyy";
+    const TEST_AVATAR_URL1: &str = "http://example.com/discord/avatars/Shabra2.jpg";
+    const TEST_AVATAR_URL2: &str = "http://example.com/discord/avatars/Shabra3.jpg";
+    const TEST_AVATAR_URL3: &str = "http://example.com/discord/avatars/Thorbard.jpg";
 
     #[test]
     fn it_works1() {
-        let mut hook = DiscordWebHook::new(test_hook_url, "Test");
-        hook.set_avatar_url(test_avatar_url2);
+        let mut hook = DiscordWebHook::new(TEST_HOOK_URL, "Test");
+        hook.set_avatar_url(TEST_AVATAR_URL2);
         hook.set_username("Umpalumpa3");
 
         let embed = Embed {
@@ -220,8 +221,8 @@ mod tests {
             ..Default::default()
         };
 
-        let mut hook = DiscordWebHook::new_with_embed(test_hook_url, embed2);
-        hook.set_avatar_url(test_avatar_url1);
+        let mut hook = DiscordWebHook::new_with_embed(TEST_HOOK_URL, embed2);
+        hook.set_avatar_url(TEST_AVATAR_URL1);
         hook.set_username("Umpalumpa2");
         
         hook.fire();
@@ -238,8 +239,8 @@ mod tests {
             ..Default::default()
         };
 
-        let mut hook = DiscordWebHook::new_with_embed(test_hook_url, embed2);
-        hook.set_avatar_url(test_avatar_url3);
+        let mut hook = DiscordWebHook::new_with_embed(TEST_HOOK_URL, embed2);
+        hook.set_avatar_url(TEST_AVATAR_URL3);
         hook.set_username("Thorbard");
         
         hook.fire();
@@ -250,8 +251,8 @@ mod tests {
     #[test]
     fn it_works4() {
 
-        let mut hook = DiscordWebHook::new(test_hook_url, "some message");
-        hook.set_avatar_url(test_avatar_url3);
+        let mut hook = DiscordWebHook::new(TEST_HOOK_URL, "some message");
+        hook.set_avatar_url(TEST_AVATAR_URL3);
         hook.set_username("Thorbärdel");
        
         let mut result: result::Result<(), String> = Err("bla".to_owned());
@@ -273,8 +274,8 @@ mod tests {
     }
 
     fn it_works5() {
-        let mut hook = DiscordWebHook::new(test_hook_url, "Test");
-        hook.set_avatar_url(test_avatar_url2);
+        let mut hook = DiscordWebHook::new(TEST_HOOK_URL, "Test");
+        hook.set_avatar_url(TEST_AVATAR_URL2);
         hook.set_username("Umpalumpa3");
       
         hook.fire();
